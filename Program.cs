@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ThreadingGame
 {
@@ -7,8 +8,10 @@ namespace ThreadingGame
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            BL bl = new BL();
-            bl.ExecMethod();
+            First.DoWork();
+            Second.DoWork();
+            Third.DoWork();
+
             Console.ReadKey();
         }
     }

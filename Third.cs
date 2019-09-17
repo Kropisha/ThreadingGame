@@ -7,9 +7,9 @@ namespace ThreadingGame
     {
         public static void DoWork()
         {
-            Dictionary<int, double> value = null;
+            Dictionary<int, string> value = null;
             Parallel.Invoke(() => {value = BL.ExecMethod(); });
-            BL.ToExcel(value, Mode.Third);
+            UI.ToDoc(value, Mode.Third);
         }
     }
 }

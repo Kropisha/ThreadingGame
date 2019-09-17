@@ -7,9 +7,9 @@ namespace ThreadingGame
     {
         public static void DoWork()
         {
-            Task<Dictionary<int, double>> newTask = Task.Run(() => { return BL.ExecMethod(); });
+            Task<Dictionary<int, string>> newTask = Task.Run(() => { return BL.ExecMethod(); });
             Task.WaitAll();
-            BL.ToExcel(newTask.Result, Mode.First);
+            UI.ToDoc(newTask.Result, Mode.First);
         }     
     }
 }

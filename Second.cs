@@ -7,11 +7,11 @@ namespace ThreadingGame
     {
         public static void DoWork()
         {
-            Dictionary<int, double> value = null;
+            Dictionary<int, string> value = null;
             Thread newThread = new Thread(() => { value = BL.ExecMethod(); });
             newThread.Start();
             newThread.Join();
-            BL.ToExcel(value, Mode.Second);
+            UI.ToDoc(value, Mode.Second);
         }
     }
 }

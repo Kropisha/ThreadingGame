@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ThreadingGame
 {
@@ -11,7 +10,8 @@ namespace ThreadingGame
             First.DoWork();
             Second.DoWork();
             Third.DoWork();
-
+            Console.WriteLine();
+            UI.BeautyRead();
             Console.ReadKey();
         }
     }

@@ -10,6 +10,7 @@ namespace ThreadingGame
         private const string pattern = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         public static readonly int[] set = new[] { 200, 2000, 20000, 200000, 500000 }; //   20, 200, 500, 2000, 5000
         private static int stringLength = 1000;
+        public static string[] GeneratedSet { get; set; }
 
         private static char GetRandomChar()
         {
@@ -20,23 +21,20 @@ namespace ThreadingGame
 
         private static string GetRandomString(int count)
         {
-            string result = string.Empty;
+            var charArray = new List<char>();
             for (int i = 0; i < count; i++)
             {
-                result += GetRandomChar();
+                charArray.Add(GetRandomChar());
             }
 
-            return result;
+            return new string(charArray.ToArray());
         }
 
         private static string[] GetStringSet(int count)
         {
             string[] current = new string[count];
 
-            for (int i = 0; i < count; i++)
-            {
-                current[i] = GetRandomString(stringLength);
-            }
+            current = current.AsParallel().Select(x => GetRandomString(stringLength)).ToArray();
 
             return current;
         }
@@ -45,18 +43,24 @@ namespace ThreadingGame
         {
             double value = 0;
             Dictionary<int, string> result = new Dictionary<int, string>();
+            if (GeneratedSet == null)
+            {
+                GeneratedSet = GetStringSet(set.Max());
+            }
+
             foreach (var val in set)
             {
-                string[] resultStr = GetStringSet(val);
+                string[] current = new string[val];
+                Array.Copy(GeneratedSet, current, val);
                 Dictionary<char, int> general = new Dictionary<char, int>();
 
                 Stopwatch s1 = new Stopwatch();
                 s1.Start();
-                foreach (string str in resultStr)
+                foreach (string str in current)
                 {
                     Dictionary<char, int> temp = new Dictionary<char, int>();
                     temp = CharacterCount(str);
-                    if (resultStr[0] == str)
+                    if (current[0] == str)
                     {
                         general = temp;
                     }
